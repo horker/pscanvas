@@ -1,0 +1,10 @@
+pscanvas/
+debug/
+
+.vs/
+bin/
+obj/
+packages/
+*.user
+
+private/
