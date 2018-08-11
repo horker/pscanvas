@@ -19,5 +19,7 @@ namespace Horker.Canvas
         IReadOnlyList<IPane> Panes { get; }
 
         void AddPane(IPane pane);
+        void ReplacePane(IPane oldPane, IPane newPane);
+        void RemovePane(IPane pane);
     }
 }

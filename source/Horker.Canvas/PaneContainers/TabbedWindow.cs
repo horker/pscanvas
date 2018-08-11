@@ -20,9 +20,9 @@ namespace Horker.Canvas
 
         public IReadOnlyList<IPane> Panes { get => _panes; }
 
-        public TabbedWindow(IDictionary<string, object> props = null)
+        public TabbedWindow(IDictionary<string, object> windowProps = null, IDictionary<string, object> tabProps = null)
         {
-            Window window = WpfWindow.CreateWindow(null, props, w => {
+            Window window = WpfWindow.CreateWindow(null, windowProps, w => {
                 if (string.IsNullOrEmpty(w.Title))
                     w.Title = "pscanvas (tabbed)";
 
@@ -31,6 +31,8 @@ namespace Horker.Canvas
                 tab.VerticalAlignment = VerticalAlignment.Stretch;
 
                 w.Content = tab;
+
+                Helpers.SetProperties(tab, tabProps);
             });
 
             _window = window;
@@ -96,7 +98,30 @@ namespace Horker.Canvas
         private void CloseButton_OnClick(object sender, RoutedEventArgs e)
         {
             var tabItem = (TabItem)sender;
-            TabControl.Items.Remove(tabItem);
+            var index = TabControl.Items.IndexOf(tabItem);
+            RemovePaneAt(index);
+        }
+
+        public void ReplacePane(IPane oldPane, IPane newPane)
+        {
+            var index = _panes.IndexOf(oldPane);
+            TabControl.Items[index] = newPane.Content;
+            _panes[index] = newPane;
+        }
+
+        public void RemovePane(IPane pane)
+        {
+            var index = _panes.IndexOf(pane);
+            RemovePaneAt(index);
+        }
+
+        private void RemovePaneAt(int index)
+        {
+            if (index < 0 || _panes.Count <= index)
+                throw new ArgumentException("Pane not found");
+
+            TabControl.Items.RemoveAt(index);
+            _panes.RemoveAt(index);
         }
     }
 }
