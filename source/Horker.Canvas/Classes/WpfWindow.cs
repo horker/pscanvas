@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Controls;
 using System.Reflection;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Windows.Markup;
-using System;
-using System.Windows.Controls;
 
 #pragma warning disable CS1591
 
@@ -15,19 +15,19 @@ namespace Horker.Canvas
 {
     public class WpfWindow
     {
-        private static PropertyInfo IsDisposedMethod = typeof(System.Windows.Window).GetProperty("IsDisposed", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static PropertyInfo IsDisposedMethod = typeof(Window).GetProperty("IsDisposed", BindingFlags.NonPublic | BindingFlags.Instance);
 
         private static Window _rootWindow;
         private static PowerShell _powerShell;
 
         public static Window RootWindow { get => _rootWindow; }
 
-        static public bool IsWindowClosed(System.Windows.Window w)
+        static public bool IsWindowClosed(Window w)
         {
             return (bool)IsDisposedMethod.GetValue(w);
         }
 
-        static public void OpenInvisibleWindow(List<System.Windows.Window> result, AutoResetEvent e)
+        static public void OpenInvisibleWindow(List<Window> result, AutoResetEvent e)
         {
             var window = new Window();
 
@@ -38,7 +38,7 @@ namespace Horker.Canvas
             window.ShowInTaskbar = false;
 
             window.Loaded += (sender, args) => {
-                Win32Api.MakeWindowInvisibleInTaskSwitcher((System.Windows.Window)sender);
+                Win32Api.MakeWindowInvisibleInTaskSwitcher((Window)sender);
             };
 
             result.Add(window);
