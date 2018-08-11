@@ -26,7 +26,7 @@ namespace Horker.Canvas
                 if (string.IsNullOrEmpty(w.Title))
                     w.Title = "pscanvas (tabbed)";
 
-                var tab = new ScrollableTabControl.ScrollableTabControl();
+                var tab = new Vortexwolf.ScrollableTabControl.ScrollableTabControl();
                 tab.HorizontalAlignment = HorizontalAlignment.Stretch;
                 tab.VerticalAlignment = VerticalAlignment.Stretch;
 

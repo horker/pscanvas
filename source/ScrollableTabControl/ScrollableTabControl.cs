@@ -15,7 +15,10 @@ using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using System.Collections.Specialized;
 
-namespace ScrollableTabControl
+// ref.
+// https://vortexwolf.wordpress.com/2011/07/27/silverlight-tabcontrol-with-scrolling-and-with-the-new-tab-button/
+
+namespace Vortexwolf.ScrollableTabControl
 {
     public class ScrollableTabControl : TabControl
     {

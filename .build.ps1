@@ -17,8 +17,8 @@ $SOLUTION_FILE = "$PSScriptRoot\source\pscanvas.sln"
 $OBJECT_FILES = @(
   "Horker.Canvas.dll"
   "Horker.Canvas.pdb"
-  "ScrollableTabControl.dll"
-  "ScrollableTabControl.pdb"
+  "Vortexwolf.ScrollableTabControl.dll"
+  "Vortexwolf.ScrollableTabControl.pdb"
 )
 
 $LIB_PATH = "$PSScriptRoot\lib"

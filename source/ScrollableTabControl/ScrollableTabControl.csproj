@@ -8,8 +8,8 @@
     <ProjectGuid>{2E1FCE53-9B2D-4671-81E2-F9F7CDAFEAF4}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScrollableTabControl</RootNamespace>
-    <AssemblyName>ScrollableTabControl</AssemblyName>
+    <RootNamespace>Vortexwolf.ScrollableTabControl</RootNamespace>
+    <AssemblyName>Vortexwolf.ScrollableTabControl</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
