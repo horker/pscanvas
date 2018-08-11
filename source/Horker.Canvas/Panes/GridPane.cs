@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Horker.Canvas
@@ -13,13 +14,14 @@ namespace Horker.Canvas
     {
         private string _name;
         private Grid _grid;
+        private int _splitterCount;
 
         public string Name { get => _name; }
         public UIElement Content { get => _grid; }
 
         public Grid Grid { get => _grid; }
 
-        public GridPane(string name, string[] rowDefinitions, string[] columnDefinitions)
+        public GridPane(string name, string[] rowDefinitions, string[] columnDefinitions, bool resizable = true)
         {
             _name = name;
 
@@ -27,11 +29,11 @@ namespace Horker.Canvas
                 _grid = new Grid();
                 _grid.HorizontalAlignment = HorizontalAlignment.Stretch;
                 _grid.VerticalAlignment = VerticalAlignment.Stretch;
+                _grid.ShowGridLines = false;
 
-                _grid.ShowGridLines = true;
-
-                foreach (var def in rowDefinitions)
+                for (var i = 0; i < rowDefinitions.Length; ++i)
                 {
+                    var def = rowDefinitions[i];
                     var converter = new GridLengthConverter();
                     var length = (GridLength)converter.ConvertFromString(def);
 
@@ -40,8 +42,9 @@ namespace Horker.Canvas
                     _grid.RowDefinitions.Add(rowDef);
                 }
 
-                foreach (var def in columnDefinitions)
+                for (var i = 0; i < columnDefinitions.Length; ++i)
                 {
+                    var def = columnDefinitions[i];
                     var converter = new GridLengthConverter();
                     var length = (GridLength)converter.ConvertFromString(def);
 
@@ -49,6 +52,45 @@ namespace Horker.Canvas
                     columnDef.Width = length;
                     _grid.ColumnDefinitions.Add(columnDef);
                 }
+
+                // Add grid splitters
+
+                if (resizable)
+                {
+                    for (var i = 0; i < rowDefinitions.Length - 1; ++i)
+                    {
+                        var splitter = new GridSplitter()
+                        {
+                            Height = 5,
+                            VerticalAlignment = VerticalAlignment.Bottom,
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            Background = Brushes.Transparent
+                        };
+                        _grid.Children.Add(splitter);
+                        Grid.SetRow(splitter, i);
+                        Grid.SetColumn(splitter, 0);
+                        Grid.SetColumnSpan(splitter, columnDefinitions.Length);
+                        Grid.SetZIndex(splitter, 99);
+                    }
+
+                    for (var i = 0; i < columnDefinitions.Length - 1; ++i)
+                    {
+                        var splitter = new GridSplitter()
+                        {
+                            Width = 5,
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            HorizontalAlignment = HorizontalAlignment.Right,
+                            Background = Brushes.Transparent
+                        };
+                        _grid.Children.Add(splitter);
+                        Grid.SetRow(splitter, 0);
+                        Grid.SetColumn(splitter, i);
+                        Grid.SetRowSpan(splitter, rowDefinitions.Length);
+                        Grid.SetZIndex(splitter, 99);
+                    }
+                }
+
+                _splitterCount = _grid.Children.Count;
             });
         }
 
@@ -65,8 +107,7 @@ namespace Horker.Canvas
 
         public void SetContent(IPane pane, int row, int column, int span = 1)
         {
-            UIElement content = pane.Content;
-            SetContent(content, row, column, span);
+            SetContent(pane.Content, row, column, span);
         }
 
         public void AddContent(UIElement content)
@@ -74,7 +115,7 @@ namespace Horker.Canvas
             int row = 0;
             int column = 0;
             WpfWindow.RootWindow.Dispatcher.Invoke(() => {
-                var count = _grid.Children.Count;
+                var count = _grid.Children.Count - _splitterCount;
                 var columns = _grid.ColumnDefinitions.Count;
 
                 row = count / columns;
@@ -86,8 +127,7 @@ namespace Horker.Canvas
 
         public void AddContent(IPane pane)
         {
-            UIElement content = (UIElement)pane.Content;
-            AddContent(content);
+            AddContent(pane.Content);
         }
 
         public void RemoveContent(UIElement content)

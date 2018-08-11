@@ -11,8 +11,8 @@ namespace Tests
         {
             var window = new Horker.Canvas.TabbedWindow();
 
-//            var pane = new Horker.Canvas.DataTablePane("table1");
-//            window.AddPane(pane);
+            var pane = new Horker.Canvas.GridPane("grid", new string[] { "1*", "2*", "3*" }, new string[] { "1*", "1*" });
+            window.AddPane(pane);
         }
     }
 }
