@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace Horker.Canvas
 {
-    public class DataTablePane : IPane
+    public class DataGridPane : IPane
     {
         private string _name;
         private DataGrid _dataGrid;
@@ -22,7 +22,7 @@ namespace Horker.Canvas
 
         public DataTable DataTable { get => _dataTable; }
 
-        public DataTablePane(string name, DataTable dataTable)
+        public DataGridPane(string name, DataTable dataTable, IDictionary<string, object> props = null)
         {
             _name = name;
 
@@ -33,6 +33,8 @@ namespace Horker.Canvas
                 _dataGrid.ItemsSource = _dataTable.DefaultView;
                 _dataGrid.AutoGenerateColumns = true;
                 _dataGrid.CanUserAddRows = false;
+
+                Helpers.SetProperties(_dataGrid, props);
             });
         }
     }

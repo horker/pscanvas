@@ -20,10 +20,11 @@ namespace Horker.Canvas
 
         public IReadOnlyList<IPane> Panes { get => _panes; }
 
-        public TabbedWindow()
+        public TabbedWindow(IDictionary<string, object> props = null)
         {
-            Window window = WpfWindow.CreateWindow(null, w => {
-                w.Title = "pscanvas (tabbed)";
+            Window window = WpfWindow.CreateWindow(null, props, w => {
+                if (string.IsNullOrEmpty(w.Title))
+                    w.Title = "pscanvas (tabbed)";
 
                 var tab = new ScrollableTabControl.ScrollableTabControl();
                 tab.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -74,7 +75,6 @@ namespace Horker.Canvas
                 tabTemplate.ColumnDefinitions.Add(new ColumnDefinition());
                 tabTemplate.ColumnDefinitions.Add(new ColumnDefinition());
                 tabTemplate.Children.Add(header);
-
                 Grid.SetColumn(header, 0);
                 tabTemplate.Children.Add(viewBox);
                 Grid.SetColumn(viewBox, 1);

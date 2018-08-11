@@ -17,7 +17,7 @@ namespace Horker.Canvas
         public string Name { get => _file; }
         public UIElement Content { get => _image; }
 
-        public ImagePane(string file)
+        public ImagePane(string file, IDictionary<string, object> props = null)
         {
             _file = file;
 
@@ -29,6 +29,8 @@ namespace Horker.Canvas
 
                 _image = new Image();
                 _image.Source = bitmap;
+
+                Helpers.SetProperties(_image, props);
             });
         }
     }

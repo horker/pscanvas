@@ -83,7 +83,7 @@ namespace Horker.Canvas
             _rootWindow = result[0];
         }
 
-        static public Window CreateWindow(string xamlString = null, Action<Window> action = null)
+        static public Window CreateWindow(string xamlString = null, IDictionary<string, object> props = null, Action<Window> action = null)
         {
             Window window = null;
 
@@ -96,36 +96,11 @@ namespace Horker.Canvas
                 else
                     window = new Window();
 
+                Helpers.SetProperties(window, props);
+
                 action.Invoke(window);
 
                 window.Show();
-            });
-
-            return window;
-        }
-
-        static public Window CreateGridWindow(int rows, int columns)
-        {
-            Window window = CreateWindow(null, w =>
-            {
-                var grid = new Grid();
-
-                for (var i = 0; i < rows; ++i)
-                {
-                    var def = new RowDefinition();
-                    def.Height = (GridLength)(new GridLengthConverter()).ConvertFrom(1.0);
-                    grid.RowDefinitions.Add(def);
-                }
-
-                for (var i = 0; i < columns; ++i)
-                {
-                    var def = new ColumnDefinition();
-                    def.Width = (GridLength)(new GridLengthConverter()).ConvertFrom(1.0);
-                    grid.ColumnDefinitions.Add(def);
-                }
-
-                w.Content = grid;
-
             });
 
             return window;
