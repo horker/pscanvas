@@ -123,5 +123,17 @@ namespace Horker.Canvas
             TabControl.Items.RemoveAt(index);
             _panes.RemoveAt(index);
         }
+
+        public void Close()
+        {
+            _window.Dispatcher.Invoke(() => {
+                _window.Close();
+            });
+        }
+
+        public bool IsClosed()
+        {
+            return WpfWindow.IsWindowClosed(_window);
+        }
     }
 }

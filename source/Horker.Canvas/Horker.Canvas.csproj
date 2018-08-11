@@ -50,9 +50,10 @@
   <ItemGroup>
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\IPaneContainer.cs" />
+    <Compile Include="Classes\PaneContainerManager.cs" />
     <Compile Include="PaneContainers\TabbedWindow.cs" />
     <Compile Include="Classes\WpfWindow.cs" />
-    <Compile Include="Cmdlets\WpfWindowCmdlets.cs" />
+    <Compile Include="Cmdlets\CanvasWindowCmdlet.cs" />
     <Compile Include="Panes\DataTablePane.cs" />
     <Compile Include="Panes\GridPane.cs" />
     <Compile Include="Panes\ImagePane.cs" />

@@ -21,5 +21,8 @@ namespace Horker.Canvas
         void AddPane(IPane pane);
         void ReplacePane(IPane oldPane, IPane newPane);
         void RemovePane(IPane pane);
+
+        void Close();
+        bool IsClosed();
     }
 }
