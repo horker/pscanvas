@@ -1,1 +1,1 @@
-# pscanvas: Visualization framework for PowerShell
+# pscanvas: WPF-based scriptable canvas for PowerShell
