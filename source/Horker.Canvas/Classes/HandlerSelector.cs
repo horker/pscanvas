@@ -41,7 +41,8 @@ namespace Horker.Canvas
 
         public IHandler SelectByName(string name)
         {
-            var handler = Handlers[name.ToLower()];
+            IHandler handler = null;
+            Handlers.TryGetValue(name.ToLower(), out handler);
 
             if (handler == null)
                 handler = FallbackHandler;
@@ -54,7 +55,8 @@ namespace Horker.Canvas
 
         public IHandler SelectByType(Type type)
         {
-            var handler = TypeHandlerMap[type];
+            IHandler handler = null;
+            TypeHandlerMap.TryGetValue(type, out handler);
 
             if (handler == null)
                 handler = FallbackHandler;
