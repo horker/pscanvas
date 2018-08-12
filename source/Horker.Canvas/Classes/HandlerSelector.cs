@@ -20,11 +20,16 @@ namespace Horker.Canvas
             TypeHandlerMap = new Dictionary<Type, IHandler>();
 
             // Preset handlers
-
-            Handlers["image"] = new ImageHandler();
-            AddHandlerTypes(Handlers["image"]);
+            RegisterHandler("image", new ImageHandler());
+            RegisterHandler("browser", new BrowserHandler());
 
             FallbackHandler = null;
+        }
+
+        public void RegisterHandler(string name, IHandler handler)
+        {
+            Handlers[name] = handler;
+            AddHandlerTypes(handler);
         }
 
         public void AddHandlerTypes(IHandler handler)

@@ -54,9 +54,11 @@
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Handlers\IHandler.cs" />
     <Compile Include="Handlers\HandlerBase.cs" />
+    <Compile Include="Handlers\BrowserHandler.cs" />
     <Compile Include="PaneContainers\ICanvas.cs" />
     <Compile Include="PaneContainers\TabbedCanvas.cs" />
     <Compile Include="Panes\DataGridPane.cs" />
+    <Compile Include="Panes\BrowserPane.cs" />
     <Compile Include="Panes\IPane.cs" />
     <Compile Include="Cmdlets\OutCanvasCmdlet.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
