@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Horker.Canvas
 {
-    public interface IPaneContainer
+    public interface ICanvas
     {
         IReadOnlyList<IPane> Panes { get; }
 

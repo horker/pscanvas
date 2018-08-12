@@ -65,7 +65,7 @@ namespace Horker.Canvas
             if (panes == null)
                 return;
 
-            var canvas = PaneContainerManager.Instance.GetActiveContainer();
+            var canvas = CanvasManager.Instance.GetActiveCanvas();
 
             foreach (var pane in panes)
                 canvas.AddPane(pane);

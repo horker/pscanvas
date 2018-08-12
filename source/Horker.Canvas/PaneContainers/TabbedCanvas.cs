@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace Horker.Canvas
 {
-    public class TabbedWindow : IPaneContainer
+    public class TabbedCanvas : ICanvas
     {
         private Window _window;
         private List<IPane> _panes;
@@ -20,7 +20,7 @@ namespace Horker.Canvas
 
         public IReadOnlyList<IPane> Panes { get => _panes; }
 
-        public TabbedWindow(IDictionary<string, object> windowProps = null, IDictionary<string, object> tabProps = null)
+        public TabbedCanvas(IDictionary<string, object> windowProps = null, IDictionary<string, object> tabProps = null)
         {
             Window window = WpfWindow.CreateWindow(null, windowProps, w => {
                 if (string.IsNullOrEmpty(w.Title))

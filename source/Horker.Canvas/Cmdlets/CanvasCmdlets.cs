@@ -21,9 +21,9 @@ namespace Horker.Canvas
             var windowProps = Helpers.ToDictionary(WindowProperties);
             var tabProps = Helpers.ToDictionary(TabControlProperties);
 
-            var w = new TabbedWindow(windowProps, tabProps);
+            var w = new TabbedCanvas(windowProps, tabProps);
 
-            PaneContainerManager.Instance.Add(w);
+            CanvasManager.Instance.Add(w);
 
             WriteObject(w);
         }
@@ -33,7 +33,7 @@ namespace Horker.Canvas
     public class CloseCanvas : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
-        public IPaneContainer Window { get; set; }
+        public ICanvas Window { get; set; }
 
         protected override void EndProcessing()
         {
@@ -63,7 +63,7 @@ namespace Horker.Canvas
     public class TestCanvasClosed : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
-        public IPaneContainer Window { get; set; }
+        public ICanvas Window { get; set; }
 
         protected override void EndProcessing()
         {
@@ -76,7 +76,7 @@ namespace Horker.Canvas
     {
         protected override void EndProcessing()
         {
-            var list = PaneContainerManager.Instance.GetLiveContainers();
+            var list = CanvasManager.Instance.GetLiveCanvases();
 
             foreach (var w in list)
                 WriteObject(w);
