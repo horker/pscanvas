@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Horker.Canvas
     public class ImagePane : PaneBase
     {
         private string _name;
-        private Image _image;
+        private System.Windows.Controls.Image _image;
 
         public override string Name { get => _name; }
         public override UIElement Content { get => _image; }
@@ -29,9 +30,10 @@ namespace Horker.Canvas
             });
         }
 
-        public ImagePane(string name, BitmapSource bitmapSource, IDictionary<string, object> props = null)
+        public ImagePane(string name, Bitmap bitmap, IDictionary<string, object> props = null)
         {
             Helpers.InvokeInWindowLoop(() => {
+                var bitmapSource = Helpers.BitmapToBitmapSource(bitmap);
                 CreateImagePane(name, bitmapSource, props);
             });
         }
@@ -39,7 +41,7 @@ namespace Horker.Canvas
         private void CreateImagePane(string name, BitmapSource bitmapSource, IDictionary<string, object> props = null)
         {
             _name = name;
-            _image = new Image();
+            _image = new System.Windows.Controls.Image();
             _image.Source = bitmapSource;
             Helpers.SetProperties(_image, props);
         }

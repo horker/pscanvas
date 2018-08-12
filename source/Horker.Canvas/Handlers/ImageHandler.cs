@@ -23,7 +23,8 @@ namespace Horker.Canvas
 
             if (type == typeof(Bitmap))
             {
-                throw new NotImplementedException();
+                var bitmap = obj as Bitmap;
+                return new ImagePane("Bitmap", bitmap);
             }
             else if (type == typeof(string))
             {
