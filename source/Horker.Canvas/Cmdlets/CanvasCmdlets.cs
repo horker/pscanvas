@@ -7,19 +7,19 @@ using System.Windows;
 
 namespace Horker.Canvas
 {
-    [Cmdlet("New", "CanvasTabbedWindow")]
-    public class NewCanvasTabbedWindow : PSCmdlet
+    [Cmdlet("New", "TabbedCanvas")]
+    public class NewTabbedCanvas : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = false)]
         public Hashtable WindowProperties { get; set; }
 
         [Parameter(Position = 1, Mandatory = false)]
-        public Hashtable TabProperties { get; set; }
+        public Hashtable TabControlProperties { get; set; }
 
         protected override void EndProcessing()
         {
             var windowProps = Helpers.ToDictionary(WindowProperties);
-            var tabProps = Helpers.ToDictionary(TabProperties);
+            var tabProps = Helpers.ToDictionary(TabControlProperties);
 
             var w = new TabbedWindow(windowProps, tabProps);
 
@@ -29,8 +29,8 @@ namespace Horker.Canvas
         }
     }
 
-    [Cmdlet("Close", "CanvasWindow")]
-    public class CloseCanvasWindow : PSCmdlet
+    [Cmdlet("Close", "Canvas")]
+    public class CloseCanvas : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
         public IPaneContainer Window { get; set; }
@@ -41,20 +41,17 @@ namespace Horker.Canvas
         }
     }
 
-    [Cmdlet("Invoke", "CanvasWindowAction")]
-    public class InvokeCanvasWindowAction : PSCmdlet
+    [Cmdlet("Invoke", "CanvasAction")]
+    public class InvokeCanvasAction : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
-        public Window Window { get; set; }
-
-        [Parameter(Position = 1, Mandatory = true)]
         public ScriptBlock Action { get; set; }
 
         protected override void EndProcessing()
         {
             System.Collections.ObjectModel.Collection<PSObject> results = null;
-            Window.Dispatcher.Invoke(() => {
-                results = InvokeCommand.InvokeScript(false, Action, new object[] { Window });
+            Helpers.InvokeInWindowLoop(() => {
+                results = InvokeCommand.InvokeScript(false, Action, null);
             });
 
             foreach (var r in results)
@@ -62,8 +59,8 @@ namespace Horker.Canvas
         }
     }
 
-    [Cmdlet("Test", "CanvasWindowClosed")]
-    public class TestCanvasWindowClosed : PSCmdlet
+    [Cmdlet("Test", "CanvasClosed")]
+    public class TestCanvasClosed : PSCmdlet
     {
         [Parameter(Position = 0, Mandatory = true)]
         public IPaneContainer Window { get; set; }
@@ -74,8 +71,8 @@ namespace Horker.Canvas
         }
     }
 
-    [Cmdlet("Get", "CanvasWindowList")]
-    public class GetCanvasWindowList : PSCmdlet
+    [Cmdlet("Get", "CanvasList")]
+    public class GetCanvasList : PSCmdlet
     {
         protected override void EndProcessing()
         {

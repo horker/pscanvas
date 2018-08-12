@@ -9,29 +9,39 @@ using System.Windows.Media.Imaging;
 
 namespace Horker.Canvas
 {
-    public class ImagePane : IPane
+    public class ImagePane : PaneBase
     {
-        private string _file;
+        private string _name;
         private Image _image;
 
-        public string Name { get => _file; }
-        public UIElement Content { get => _image; }
+        public override string Name { get => _name; }
+        public override UIElement Content { get => _image; }
 
         public ImagePane(string file, IDictionary<string, object> props = null)
         {
-            _file = file;
+            Helpers.InvokeInWindowLoop(() => {
+                var bitmapSource = new BitmapImage();
+                bitmapSource.BeginInit();
+                bitmapSource.UriSource = new Uri(file);
+                bitmapSource.EndInit();
 
-            WpfWindow.RootWindow.Dispatcher.Invoke(() => {
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(file);
-                bitmap.EndInit();
-
-                _image = new Image();
-                _image.Source = bitmap;
-
-                Helpers.SetProperties(_image, props);
+                CreateImagePane(file, bitmapSource, props);
             });
+        }
+
+        public ImagePane(string name, BitmapSource bitmapSource, IDictionary<string, object> props = null)
+        {
+            Helpers.InvokeInWindowLoop(() => {
+                CreateImagePane(name, bitmapSource, props);
+            });
+        }
+
+        private void CreateImagePane(string name, BitmapSource bitmapSource, IDictionary<string, object> props = null)
+        {
+            _name = name;
+            _image = new Image();
+            _image.Source = bitmapSource;
+            Helpers.SetProperties(_image, props);
         }
     }
 }

@@ -2,6 +2,8 @@
 
 Set-StrictMode -Version 4
 
+[Horker.Canvas.WpfWindow]::OpenRootWindow()
+
 ############################################################
 # Extension methods
 ############################################################

@@ -36,13 +36,12 @@ namespace Horker.Canvas
             });
 
             _window = window;
-
             _panes = new List<IPane>();
         }
 
         public void AddPane(IPane pane)
         {
-            _window.Dispatcher.Invoke(() => {
+            Helpers.InvokeInWindowLoop(() => {
                 var name = "Tab" + (TabControl.Items.Count + 1);
 
                 // tab display text
@@ -115,10 +114,13 @@ namespace Horker.Canvas
             RemovePaneAt(index);
         }
 
-        private void RemovePaneAt(int index)
+        public void RemovePaneAt(int index)
         {
+            if (index < 0)
+                index = _panes.Count + index;
+
             if (index < 0 || _panes.Count <= index)
-                throw new ArgumentException("Pane not found");
+                throw new ArgumentOutOfRangeException("index");
 
             TabControl.Items.RemoveAt(index);
             _panes.RemoveAt(index);
@@ -126,7 +128,7 @@ namespace Horker.Canvas
 
         public void Close()
         {
-            _window.Dispatcher.Invoke(() => {
+            Helpers.InvokeInWindowLoop(() => {
                 _window.Close();
             });
         }
@@ -134,6 +136,19 @@ namespace Horker.Canvas
         public bool IsClosed()
         {
             return WpfWindow.IsWindowClosed(_window);
+        }
+
+        public void SetFocusAt(int index)
+        {
+            if (index < 0)
+                index = _panes.Count + index;
+
+            if (index < 0 || _panes.Count <= index)
+                throw new ArgumentOutOfRangeException("index");
+
+            Helpers.InvokeInWindowLoop(() => {
+                (TabControl.Items[index] as TabItem).Focus();
+            });
         }
     }
 }

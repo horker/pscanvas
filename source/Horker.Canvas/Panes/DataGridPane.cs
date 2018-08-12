@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 
 namespace Horker.Canvas
 {
-    public class DataGridPane : IPane
+    public class DataGridPane : PaneBase
     {
         private string _name;
         private DataGrid _dataGrid;
         private DataTable _dataTable;
 
-        public string Name { get => _name; }
-        public UIElement Content { get => _dataGrid; }
+        public override string Name { get => _name; }
+        public override UIElement Content { get => _dataGrid; }
 
         public DataTable DataTable { get => _dataTable; }
 

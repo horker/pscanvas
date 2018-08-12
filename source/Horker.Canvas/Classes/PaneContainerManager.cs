@@ -38,5 +38,17 @@ namespace Horker.Canvas
         {
             _containers.RemoveAll(x => x.IsClosed());
         }
+
+        public IPaneContainer GetActiveContainer()
+        {
+            var containers = GetLiveContainers();
+            if (containers.Count > 0)
+                return containers.Last();
+
+            var canvas = new TabbedWindow();
+            _containers.Add(canvas);
+
+            return canvas;
+        }
     }
 }

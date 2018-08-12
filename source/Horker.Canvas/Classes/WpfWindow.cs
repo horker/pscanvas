@@ -50,13 +50,8 @@ namespace Horker.Canvas
 
         public static void OpenRootWindow()
         {
-            if (_rootWindow != null)
-            {
-                if (!IsWindowClosed(_rootWindow))
-                {
-                    return;
-                }
-            }
+            if (_rootWindow != null && !IsWindowClosed(_rootWindow))
+                return;
 
             var runspace = RunspaceFactory.CreateRunspace();
             runspace.ApartmentState = ApartmentState.STA;
