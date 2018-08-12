@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,15 @@ namespace Horker.Canvas
         public ImagePane(string file, IDictionary<string, object> props = null)
         {
             Helpers.InvokeInWindowLoop(() => {
-                var bitmapSource = new BitmapImage();
-                bitmapSource.BeginInit();
-                bitmapSource.UriSource = new Uri(file);
-                bitmapSource.EndInit();
+                BitmapImage bitmapSource = new BitmapImage();
+
+                using (var stream = File.OpenRead(file))
+                {
+                    bitmapSource.BeginInit();
+                    bitmapSource.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapSource.StreamSource = stream;
+                    bitmapSource.EndInit();
+                }
 
                 CreateImagePane(file, bitmapSource, props);
             });
