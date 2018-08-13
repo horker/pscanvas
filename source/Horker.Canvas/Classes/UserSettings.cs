@@ -21,7 +21,8 @@ namespace Horker.Canvas
         public static UserSettings Current = null;
 
         public CanvasStyle CanvasStyle = CanvasStyle.Tabbed;
-        public CanvasStyle NewCanvasStyle = CanvasStyle.NotSpecified;
+
+        public bool OpenNewCanvas = false;
 
         public double? CanvasWidth = null;
         public double? CanvasHeight = null;
@@ -34,12 +35,8 @@ namespace Horker.Canvas
         internal ICanvas OpenCanvas()
         {
             var active = CanvasManager.Instance.GetActiveCanvas();
-            if (NewCanvasStyle == CanvasStyle.NotSpecified && active != null)
+            if (!OpenNewCanvas && active != null)
                 return active;
-
-            CanvasStyle style = CanvasStyle;
-            if (NewCanvasStyle != CanvasStyle.NotSpecified)
-                style = NewCanvasStyle;
 
             var windowProps = new Dictionary<string, object>();
 
@@ -49,7 +46,7 @@ namespace Horker.Canvas
             if (CanvasHeight.HasValue)
                 windowProps["Height"] = CanvasHeight.Value;
 
-            switch (style)
+            switch (CanvasStyle)
             {
                 case CanvasStyle.Single:
                     active = new SingleCanvas(windowProps);

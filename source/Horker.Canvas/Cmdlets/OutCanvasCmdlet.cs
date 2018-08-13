@@ -17,14 +17,22 @@ namespace Horker.Canvas
         public string HandlerName;
 
         [Parameter(Position = 1, Mandatory = false)]
-        public CanvasStyle NewCanvas = CanvasStyle.NotSpecified;
+        public SwitchParameter New = false;
+
+        [Parameter(Position = 2, Mandatory = false)]
+        public CanvasStyle CanvasStyle = CanvasStyle.NotSpecified;
 
         private IHandler _handler;
 
         protected override void BeginProcessing()
         {
             UserSettings.ResetCurrent();
-            UserSettings.Current.NewCanvasStyle = NewCanvas;
+            if (New)
+            {
+                UserSettings.Current.OpenNewCanvas = New;
+                if (CanvasStyle != CanvasStyle.NotSpecified)
+                    UserSettings.Current.CanvasStyle = CanvasStyle;
+            }
 
             if (!string.IsNullOrEmpty(HandlerName))
                 _handler = HandlerSelector.Instance.SelectByName(HandlerName);
