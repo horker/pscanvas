@@ -12,7 +12,7 @@ namespace Horker.Canvas
 
     public interface IPane
     {
-        string Name { get; }
+        string Name { get; set; }
         UIElement Content { get; }
 
         void SaveToFile(string path, ImageFileType type, double dpiX = 96.0, double dpiY = 96.0);

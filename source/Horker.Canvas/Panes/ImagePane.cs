@@ -16,7 +16,8 @@ namespace Horker.Canvas
         private string _name;
         private System.Windows.Controls.Image _image;
 
-        public override string Name { get => _name; }
+        public override string Name { get => _name; set { _name = value; } }
+
         public override UIElement Content { get => _image; }
 
         public ImagePane(string file, IDictionary<string, object> props = null)

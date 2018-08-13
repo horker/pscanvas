@@ -17,18 +17,21 @@ namespace Horker.Canvas
         public string HandlerName;
 
         [Parameter(Position = 1, Mandatory = false)]
-        public SwitchParameter New = false;
+        public string Name;
 
         [Parameter(Position = 2, Mandatory = false)]
-        public CanvasStyle CanvasStyle = CanvasStyle.NotSpecified;
+        public SwitchParameter New = false;
 
         [Parameter(Position = 3, Mandatory = false)]
-        public SwitchParameter Topmost = false;
-
-        [Parameter(Position = 4, Mandatory = false)]
-        public SwitchParameter Activate = false;
+        public CanvasStyle CanvasStyle = CanvasStyle.NotSpecified;
 
         [Parameter(Position = 5, Mandatory = false)]
+        public SwitchParameter Topmost = false;
+
+        [Parameter(Position = 6, Mandatory = false)]
+        public SwitchParameter Activate = false;
+
+        [Parameter(Position = 7, Mandatory = false)]
         public SwitchParameter MoveToForeground = false;
 
         private IHandler _handler;
@@ -100,7 +103,11 @@ namespace Horker.Canvas
             var canvas = UserSettings.Current.OpenCanvas();
 
             foreach (var pane in panes)
+            {
+                if (MyInvocation.BoundParameters.ContainsKey("Name"))
+                    pane.Name = Name;
                 canvas.AddPane(pane);
+            }
 
             canvas.SetFocusAt(-1);
 

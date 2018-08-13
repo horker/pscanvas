@@ -16,7 +16,8 @@ namespace Horker.Canvas
         private Grid _grid;
         private int _splitterCount;
 
-        public override string Name { get => _name; }
+        public override string Name { get => _name; set { _name = value; } }
+
         public override UIElement Content { get => _grid; }
 
         public Grid Grid { get => _grid; }

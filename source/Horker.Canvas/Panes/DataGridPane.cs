@@ -17,7 +17,8 @@ namespace Horker.Canvas
         private DataGrid _dataGrid;
         private DataTable _dataTable;
 
-        public override string Name { get => _name; }
+        public override string Name { get => _name; set { _name = value; } }
+
         public override UIElement Content { get => _dataGrid; }
 
         public DataTable DataTable { get => _dataTable; }

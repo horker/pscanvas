@@ -7,7 +7,8 @@ namespace Horker.Canvas
 {
     public abstract class PaneBase : IPane
     {
-        public abstract string Name { get; }
+        public abstract string Name { get; set; }
+
         public abstract UIElement Content { get; }
 
         public void SaveToFile(string path, ImageFileType type, double dpiX = 96.0, double dpiY = 96.0)
