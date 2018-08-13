@@ -61,7 +61,6 @@
     <Compile Include="Handlers\BrowserHandler.cs" />
     <Compile Include="Canvas\ICanvas.cs" />
     <Compile Include="Canvas\TabbedCanvas.cs" />
-    <Compile Include="Handlers\FileHandler.cs" />
     <Compile Include="Panes\DataGridPane.cs" />
     <Compile Include="Panes\BrowserPane.cs" />
     <Compile Include="Panes\IPane.cs" />
