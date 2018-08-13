@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 
 namespace Horker.Canvas
 {
-    // Win32 API functions and constants to make a window invisible in the task switcher
-    // ref.
-    // https://social.msdn.microsoft.com/Forums/en-US/9c4ada92-5065-4abb-a295-d62e5ddaf2b1/wpf-window-is-showen-in-alttab-list-though-windowstylenone-showintaskbarfalse?forum=wpf
-
     class Win32Api
     {
+        // Win32 API functions and constants to make a window invisible in the task switcher
+        // ref.
+        // https://social.msdn.microsoft.com/Forums/en-US/9c4ada92-5065-4abb-a295-d62e5ddaf2b1/wpf-window-is-showen-in-alttab-list-though-windowstylenone-showintaskbarfalse?forum=wpf
+
         [Flags]
         public enum ExtendedWindowStyles
         {
@@ -70,7 +70,7 @@ namespace Horker.Canvas
             return unchecked((int)intPtr.ToInt64());
         }
 
-        public static void MakeWindowInvisibleInTaskSwitcher(System.Windows.Window window)
+        public static void MakeWindowInvisibleInTaskSwitcher(Window window)
         {
             WindowInteropHelper wndHelper = new WindowInteropHelper(window);
 
@@ -79,6 +79,8 @@ namespace Horker.Canvas
             exStyle |= (int)ExtendedWindowStyles.WS_EX_TOOLWINDOW;
             SetWindowLong(wndHelper.Handle, (int)GetWindowLongFields.GWL_EXSTYLE, (IntPtr)exStyle);
         }
+
+        // DeleteObject
 
         [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
         [return: MarshalAs(UnmanagedType.Bool)]

@@ -22,17 +22,35 @@ namespace Horker.Canvas
         [Parameter(Position = 2, Mandatory = false)]
         public CanvasStyle CanvasStyle = CanvasStyle.NotSpecified;
 
+        [Parameter(Position = 3, Mandatory = false)]
+        public SwitchParameter Topmost = false;
+
+        [Parameter(Position = 4, Mandatory = false)]
+        public SwitchParameter Activate = false;
+
+        [Parameter(Position = 5, Mandatory = false)]
+        public SwitchParameter MoveToForeground = false;
+
         private IHandler _handler;
 
         protected override void BeginProcessing()
         {
+            // Settings
+
             UserSettings.ResetCurrent();
-            if (New)
-            {
+
+            if (MyInvocation.BoundParameters.ContainsKey("New"))
                 UserSettings.Current.OpenNewCanvas = New;
-                if (CanvasStyle != CanvasStyle.NotSpecified)
-                    UserSettings.Current.CanvasStyle = CanvasStyle;
-            }
+            if (MyInvocation.BoundParameters.ContainsKey("CanvasStyle"))
+                UserSettings.Current.CanvasStyle = CanvasStyle;
+            if (MyInvocation.BoundParameters.ContainsKey("Topmost"))
+                UserSettings.Current.Topmost = Topmost;
+            if (MyInvocation.BoundParameters.ContainsKey("Activate"))
+                UserSettings.Current.Activate = Activate;
+            if (MyInvocation.BoundParameters.ContainsKey("SetForeground"))
+                UserSettings.Current.MoveToForeground = MoveToForeground;
+
+            // Handler
 
             if (!string.IsNullOrEmpty(HandlerName))
                 _handler = HandlerSelector.Instance.SelectByName(HandlerName);
@@ -85,6 +103,12 @@ namespace Horker.Canvas
                 canvas.AddPane(pane);
 
             canvas.SetFocusAt(-1);
+
+            if (UserSettings.Current.MoveToForeground)
+                canvas.MoveToForeground(-1);
+
+            if (UserSettings.Current.Activate)
+                canvas.Activate(-1);
         }
     }
 }

@@ -19,5 +19,7 @@ namespace Horker.Canvas
         bool IsClosed();
 
         void SetFocusAt(int index);
+        void Activate(int index);
+        void MoveToForeground(int index);
     }
 }

@@ -150,5 +150,38 @@ namespace Horker.Canvas
                 (TabControl.Items[index] as TabItem).Focus();
             });
         }
+
+        public void Activate(int index)
+        {
+            Helpers.InvokeInWindowLoop(() => {
+                if (_window.IsVisible)
+                    _window.Show();
+
+                if (_window.WindowState == WindowState.Minimized)
+                    _window.WindowState = WindowState.Normal;
+
+                _window.Activate();
+            });
+        }
+
+        public void MoveToForeground(int index)
+        {
+            // ref.
+            // https://stackoverflow.com/questions/257587/bring-a-window-to-the-front-in-wpf
+
+            Helpers.InvokeInWindowLoop(() => {
+                if (_window.IsVisible)
+                    _window.Show();
+
+                if (_window.WindowState == WindowState.Minimized)
+                    _window.WindowState = WindowState.Normal;
+
+                if (_window.Topmost)
+                    return;
+
+                _window.Topmost = true;
+                _window.Topmost = false;
+            });
+        }
     }
 }

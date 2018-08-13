@@ -74,11 +74,11 @@ namespace Horker.Canvas
         public void Close()
         {
             Helpers.InvokeInWindowLoop(() => {
-                foreach (var w in _windows)
-                    w.Close();
+                // You can't use foreach because _windows are updated in the Window.OnClose() event.
+                var w = _windows.ToArray();
+                for (var i = 0; i < w.Length; ++i)
+                    w[i].Close();
             });
-            _windows.Clear();
-            _panes.Clear();
         }
 
         public bool IsClosed()
@@ -89,13 +89,55 @@ namespace Horker.Canvas
         public void SetFocusAt(int index)
         {
             if (index < 0)
-                index = _panes.Count + index;
+                index = _windows.Count + index;
 
-            if (index < 0 || _panes.Count <= index)
+            if (index < 0 || _windows.Count <= index)
                 throw new ArgumentOutOfRangeException("index");
 
             Helpers.InvokeInWindowLoop(() => {
                 _windows[index].Focus();
+            });
+        }
+
+        public void Activate(int index)
+        {
+            if (index < 0)
+                index = _windows.Count + index;
+
+            if (index < 0 || _windows.Count <= index)
+                throw new ArgumentOutOfRangeException("index");
+
+            Helpers.InvokeInWindowLoop(() => {
+                if (_windows[index].IsVisible)
+                    _windows[index].Show();
+
+                if (_windows[index].WindowState == WindowState.Minimized)
+                    _windows[index].WindowState = WindowState.Normal;
+
+                _windows[index].Activate();
+            });
+        }
+
+        public void MoveToForeground(int index)
+        {
+            if (index < 0)
+                index = _windows.Count + index;
+
+            if (index < 0 || _windows.Count <= index)
+                throw new ArgumentOutOfRangeException("index");
+
+            Helpers.InvokeInWindowLoop(() => {
+                if (_windows[index].IsVisible)
+                    _windows[index].Show();
+
+                if (_windows[index].WindowState == WindowState.Minimized)
+                    _windows[index].WindowState = WindowState.Normal;
+
+                if (_windows[index].Topmost)
+                    return;
+
+                _windows[index].Topmost = true;
+                _windows[index].Topmost = false;
             });
         }
     }

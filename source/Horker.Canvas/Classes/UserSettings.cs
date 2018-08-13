@@ -20,12 +20,21 @@ namespace Horker.Canvas
         public static UserSettings Default = null;
         public static UserSettings Current = null;
 
+        // Window creation
+
         public CanvasStyle CanvasStyle = CanvasStyle.Tabbed;
 
         public bool OpenNewCanvas = false;
 
         public double? CanvasWidth = null;
         public double? CanvasHeight = null;
+
+        public bool Topmost = false;
+
+        // Behavior on content update
+
+        public bool Activate = false;
+        public bool MoveToForeground = true;
 
         internal static void ResetCurrent()
         {
@@ -36,7 +45,9 @@ namespace Horker.Canvas
         {
             var active = CanvasManager.Instance.GetActiveCanvas();
             if (!OpenNewCanvas && active != null)
+            {
                 return active;
+            }
 
             var windowProps = new Dictionary<string, object>();
 
@@ -45,6 +56,9 @@ namespace Horker.Canvas
 
             if (CanvasHeight.HasValue)
                 windowProps["Height"] = CanvasHeight.Value;
+
+            if (Topmost)
+                windowProps["Topmost"] = Topmost;
 
             switch (CanvasStyle)
             {

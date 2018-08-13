@@ -87,5 +87,29 @@ namespace Horker.Canvas
                 _pane.Content.Focus();
             });
         }
+
+        public void Activate(int index)
+        {
+            Helpers.InvokeInWindowLoop(() => {
+                if (_window.IsVisible)
+                    _window.Show();
+
+                if (_window.WindowState == WindowState.Minimized)
+                    _window.WindowState = WindowState.Normal;
+
+                _window.Activate();
+            });
+        }
+
+        public void MoveToForeground(int index)
+        {
+            Helpers.InvokeInWindowLoop(() => {
+                if (_window.Topmost)
+                    return;
+
+                _window.Topmost = true;
+                _window.Topmost = false;
+            });
+        }
     }
 }
