@@ -49,14 +49,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Canvas\MultipleCanvas.cs" />
+    <Compile Include="Canvas\SingleCanvas.cs" />
     <Compile Include="Classes\CanvasManager.cs" />
     <Compile Include="Classes\HandlerSelector.cs" />
     <Compile Include="Classes\Helpers.cs" />
+    <Compile Include="Classes\UserSettings.cs" />
     <Compile Include="Handlers\IHandler.cs" />
     <Compile Include="Handlers\HandlerBase.cs" />
     <Compile Include="Handlers\BrowserHandler.cs" />
-    <Compile Include="PaneContainers\ICanvas.cs" />
-    <Compile Include="PaneContainers\TabbedCanvas.cs" />
+    <Compile Include="Canvas\ICanvas.cs" />
+    <Compile Include="Canvas\TabbedCanvas.cs" />
     <Compile Include="Panes\DataGridPane.cs" />
     <Compile Include="Panes\BrowserPane.cs" />
     <Compile Include="Panes\IPane.cs" />

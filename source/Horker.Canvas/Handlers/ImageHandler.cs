@@ -7,9 +7,9 @@ namespace Horker.Canvas
 {
     public class ImageHandler : GridHandlerBase
     {
-        public override Type[] GetAcceptableTypes()
+        public override Type[] GetPreferredTypes()
         {
-            return new Type[] { typeof(Bitmap), typeof(string), typeof(FileInfo), typeof(DirectoryInfo) };
+            return new Type[] { typeof(Bitmap) };
         }
 
         protected override string GetGridPaneName(IEnumerable<object> objects)

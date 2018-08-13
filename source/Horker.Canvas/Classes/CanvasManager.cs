@@ -45,10 +45,7 @@ namespace Horker.Canvas
             if (containers.Count > 0)
                 return containers.Last();
 
-            var canvas = new TabbedCanvas();
-            _canvases.Add(canvas);
-
-            return canvas;
+            return null;
         }
     }
 }

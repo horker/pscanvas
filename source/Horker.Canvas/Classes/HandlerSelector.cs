@@ -34,7 +34,7 @@ namespace Horker.Canvas
 
         public void AddHandlerTypes(IHandler handler)
         {
-            var types = handler.GetAcceptableTypes();
+            var types = handler.GetPreferredTypes();
             foreach (var type in types)
                 TypeHandlerMap[type] = handler;
         }

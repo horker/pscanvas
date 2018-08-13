@@ -9,7 +9,7 @@ namespace Horker.Canvas
 {
     public interface IHandler
     {
-        Type[] GetAcceptableTypes();
+        Type[] GetPreferredTypes();
 
         IEnumerable<IPane> BeginProcessing();
         IEnumerable<IPane> ProcessRecord(object inputObject);

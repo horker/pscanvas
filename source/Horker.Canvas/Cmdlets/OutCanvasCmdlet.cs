@@ -16,10 +16,16 @@ namespace Horker.Canvas
         [Parameter(Position = 0, Mandatory = false)]
         public string HandlerName;
 
+        [Parameter(Position = 1, Mandatory = false)]
+        public CanvasStyle NewCanvas = CanvasStyle.NotSpecified;
+
         private IHandler _handler;
 
         protected override void BeginProcessing()
         {
+            UserSettings.ResetCurrent();
+            UserSettings.Current.NewCanvasStyle = NewCanvas;
+
             if (!string.IsNullOrEmpty(HandlerName))
                 _handler = HandlerSelector.Instance.SelectByName(HandlerName);
 
@@ -65,7 +71,7 @@ namespace Horker.Canvas
             if (panes == null)
                 return;
 
-            var canvas = CanvasManager.Instance.GetActiveCanvas();
+            var canvas = UserSettings.Current.OpenCanvas();
 
             foreach (var pane in panes)
                 canvas.AddPane(pane);

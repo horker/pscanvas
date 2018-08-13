@@ -71,7 +71,7 @@ namespace Horker.Canvas
         }
     }
 
-    [Cmdlet("Get", "CanvasList")]
+    [Cmdlet("Get", "LiveCanvas")]
     public class GetCanvasList : PSCmdlet
     {
         protected override void EndProcessing()

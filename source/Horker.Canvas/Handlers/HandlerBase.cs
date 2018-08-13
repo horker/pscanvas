@@ -13,7 +13,7 @@ namespace Horker.Canvas
     {
         private List<object> _objects;
 
-        public abstract Type[] GetAcceptableTypes();
+        public abstract Type[] GetPreferredTypes();
 
         protected abstract string GetGridPaneName(IEnumerable<object> objects);
 

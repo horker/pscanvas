@@ -93,7 +93,8 @@ namespace Horker.Canvas
 
                 Helpers.SetProperties(window, props);
 
-                action.Invoke(window);
+                if (action != null)
+                    action.Invoke(window);
 
                 window.Show();
             });
