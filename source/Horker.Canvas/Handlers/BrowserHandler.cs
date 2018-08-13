@@ -17,6 +17,11 @@ namespace Horker.Canvas
             return "Pages";
         }
 
+        public override string[] GetPreferredFileExtensions()
+        {
+            return new string[] { ".html", ".htm" };
+        }
+
         protected override IPane CreatePane(object obj)
         {
             var type = obj.GetType();

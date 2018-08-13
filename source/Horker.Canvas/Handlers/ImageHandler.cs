@@ -12,6 +12,11 @@ namespace Horker.Canvas
             return new Type[] { typeof(Bitmap) };
         }
 
+        public override string[] GetPreferredFileExtensions()
+        {
+            return new string[] { ".bmp", ".gif", ".png", ".jpg", ".jpeg" };
+        }
+
         protected override string GetGridPaneName(IEnumerable<object> objects)
         {
             return "Images";

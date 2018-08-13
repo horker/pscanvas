@@ -15,6 +15,8 @@ namespace Horker.Canvas
 
         public abstract Type[] GetPreferredTypes();
 
+        public abstract string[] GetPreferredFileExtensions();
+
         protected abstract string GetGridPaneName(IEnumerable<object> objects);
 
         protected abstract IPane CreatePane(object obj);

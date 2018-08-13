@@ -55,11 +55,13 @@
     <Compile Include="Classes\HandlerSelector.cs" />
     <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\UserSettings.cs" />
+    <Compile Include="Cmdlets\GetHandlerCmdlet.cs" />
     <Compile Include="Handlers\IHandler.cs" />
     <Compile Include="Handlers\HandlerBase.cs" />
     <Compile Include="Handlers\BrowserHandler.cs" />
     <Compile Include="Canvas\ICanvas.cs" />
     <Compile Include="Canvas\TabbedCanvas.cs" />
+    <Compile Include="Handlers\FileHandler.cs" />
     <Compile Include="Panes\DataGridPane.cs" />
     <Compile Include="Panes\BrowserPane.cs" />
     <Compile Include="Panes\IPane.cs" />

@@ -11,6 +11,8 @@ namespace Horker.Canvas
     {
         Type[] GetPreferredTypes();
 
+        string[] GetPreferredFileExtensions();
+
         IEnumerable<IPane> BeginProcessing();
         IEnumerable<IPane> ProcessRecord(object inputObject);
         IEnumerable<IPane> EndProcessing();

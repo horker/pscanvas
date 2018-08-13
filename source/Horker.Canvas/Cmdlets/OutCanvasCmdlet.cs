@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Management.Automation;
 using System.Windows;
 
@@ -78,6 +80,16 @@ namespace Horker.Canvas
             if (_handler == null)
             {
                 _handler = HandlerSelector.Instance.SelectByType(InputObject.GetType());
+
+                if (_handler == null && InputObject is FileInfo)
+                    _handler = HandlerSelector.Instance.SelectByFileExtension((InputObject as FileInfo).Name);
+
+                if (_handler == null)
+                {
+                    WriteError(new ErrorRecord(new ArgumentException("No handler found for input object"), "", ErrorCategory.InvalidArgument, null));
+                    return;
+                }
+
                 panes = _handler.BeginProcessing();
                 ShowPanes(panes);
             }
